@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if message %}  
+{% for message in messages %}
+<div class="alert alert-{message.tag}" role="alert">
+  Delete
+</div>
+{% endfor %}
+
+{% endif %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <form action="" method="post">
+      {% csrf_token%}
+      <tr>
+        <th scope="row"><button type="submit">Add</button></th>
+        <td><input type="text" name="todo"></td>
+      </tr>
+    </form>
+    {% for todo in todos %}
+    <tr>
+        {% csrf_token %}
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{todo.todo|truncatewords:5}}</td>
+        <td><a href=" {% url 'delete' todo.pk %}"><button class="btn btn-danger" type="submit">Delete</button></a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}
